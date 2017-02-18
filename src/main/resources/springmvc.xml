@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 可以扫描controller、service、...这里让扫描controller，指定controller的包 -->
+    <context:component-scan base-package="com.xinlee.demo.controller"/>
+
+    <!-- 校验器注入到处理器适配器中 -->
+    <mvc:annotation-driven/>
+
+    <!-- Velocity自身配置 -->
+    <bean class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+        <!-- 模板存放根目录 -->
+        <property name="resourceLoaderPath" value="/WEB-INF/view"/>
+        <property name="velocityProperties">
+            <props>
+                <!-- 输入编码 -->
+                <prop key="input.encoding">UTF-8</prop>
+                <!-- 输出编码 -->
+                <prop key="output.encoding">UTF-8</prop>
+            </props>
+        </property>
+    </bean>
+    <!-- Velocity视图解析器的配置-->
+    <bean class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+        <!-- 后缀 -->
+        <property name="suffix" value=".vm" />
+        <!-- 解析内容以及编码 -->
+        <property name="contentType" value="text/html;charset=utf-8" />
+    </bean>
+
+    <!-- 文件上传 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 设置上传文件的最大尺寸为5MB -->
+        <property name="maxUploadSize" value="5242880"/>
+    </bean>
+</beans>
